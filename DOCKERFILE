@@ -1,0 +1,28 @@
+FROM scratch
+# użycie obrazu alpine
+ADD alpine-minirootfs-3.19.1-aarch64.tar /
+#ustawienie katalogu domyślnego
+WORKDIR /app
+# instalacja nodejs, npm i curl
+RUN apk add --no-cache nodejs npm curl
+# kopiowanie aplikacji serwerowej
+COPY package.json ./
+COPY src ./src
+COPY node_modules ./node_modules
+# ustawienie zmiennych
+ARG AUTOR 
+ARG PORT=3000
+# otagowanie autora
+LABEL org.opencontainers.image.authors="$AUTOR"
+# ustawienie zmiennych dla aplikacji serwerowej
+ENV NODE_AUTOR=${AUTOR}
+ENV NODE_PORT=${PORT}
+# instalacja aplikacji serwerowej
+RUN npm install
+# otworzenie portu
+EXPOSE ${PORT}
+# healthcheck działa tylko przy domyślnym portem 3000
+HEALTHCHECK --interval=10s --timeout=1s \
+ CMD curl -f http://localhost:3000/ || exit 1
+# uruchomienie aplikacji serwerowej
+CMD ["node", "src/index.js"]
