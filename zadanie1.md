@@ -67,8 +67,9 @@ CMD ["node", "src/index.js"]
 
 
 
+# 3. Należy podać polecenia 
 
-# Aby utworzyć kontenet należy użyt tego polecenia. Można zmienić autora serwera oraz numer portu na którym będzie uruchomiony serwer (domyślnie ustawiony jest port 3000)
+# Aby utworzyć kontener należy użyt tego polecenia. Można zmienić autora serwera oraz numer portu na którym będzie uruchomiony serwer (domyślnie ustawiony jest port 3000)
 docker build --build-arg AUTOR="Piotr Plewka" --build-arg PORT=3456 -f DOCKERFILE -t zadanie1:v1 .
 
 # Aby uruchomić kontener z tym obrazem należy użyć tego polecenia. Należy pamiętać o przekierowaniu portów 
